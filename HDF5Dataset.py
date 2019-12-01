@@ -18,8 +18,7 @@ from collections import namedtuple
 
 Data = namedtuple("Data", ["start_hour", "date", "day_of_week", "isHoliday", 
                            "start_zone_latitude", "start_zone_longitude", 
-                           "end_zone_latitude", "end_zone_longitude", 
-                           "price", "distance", "ETA"])
+                           "end_zone_latitude", "end_zone_longitude", "distance", "ETA"])
 
 class HDF5Dataset:
 
