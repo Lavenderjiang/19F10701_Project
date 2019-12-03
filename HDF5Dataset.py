@@ -22,8 +22,10 @@ Data = namedtuple("Data", ["start_hour", "date", "day_of_week", "isHoliday",
 
 class HDF5Dataset:
 
-    def __init__(self, csv_filename):
-        self.dataset, self.save_dir = self.parse_file(csv_filename)
+    def __init__(self, hdf5_filename):
+        f = h5py.File(hdf5_filename, "r")
+        self.dataset = f["mydataset"]
+        self.save_dir = hdf5_filename
         self.num_of_features = len(Data._fields) - 1
 
     def __len__(self):
@@ -62,10 +64,6 @@ class HDF5Dataset:
 
     def __call__(self):
         return self.X(), self.Y(), self.W()
-
-    def parse_file(self, filename):
-        """TODO(Eryn): parse raw csv file and return formatted hdf5 file (private method)"""
-        pass
 
     
 
