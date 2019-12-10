@@ -16,9 +16,9 @@ ds.num_of_features        # get the number of features
 import h5py
 from collections import namedtuple
 
-Data = namedtuple("Data", ["start_hour", "date", "day_of_week", "isHoliday", 
-                           "start_zone_latitude", "start_zone_longitude", 
-                           "end_zone_latitude", "end_zone_longitude", "distance", "ETA"])
+# Data = namedtuple("Data", ["start_hour", "date", "day_of_week", "isHoliday", 
+#                            "start_zone_latitude", "start_zone_longitude", 
+#                            "end_zone_latitude", "end_zone_longitude", "distance", "ETA"])
 
 class HDF5Dataset:
 
@@ -26,7 +26,7 @@ class HDF5Dataset:
         f = h5py.File(hdf5_filename, "r")
         self.dataset = f["mydataset"]
         self.save_dir = hdf5_filename
-        self.num_of_features = len(Data._fields) - 1
+        self.num_of_features = 57
 
     def __len__(self):
         """Get length of the dataset"""
@@ -34,20 +34,11 @@ class HDF5Dataset:
 
     def __getitem__(self, key):
         """Get single instance"""
-        if type(key) is int:
-            return Data._make(self.dataset[key])
-
-        """Get single feature across all instances"""
-        try:
-            index = self.features().index(key)
-            return self.dataset[:, index]
-        except:
-            print("Undefined key value")
-
+        return self.dataset[key]
 
     def features(self):
         """Get data fields"""
-        return Data._fields
+        pass
 
     def X(self):
         """Get X matrix: n instances x d features"""
@@ -63,7 +54,7 @@ class HDF5Dataset:
         pass
 
     def __call__(self):
-        return self.X(), self.Y(), self.W()
+        return self.X(), self.Y()
 
     
 
